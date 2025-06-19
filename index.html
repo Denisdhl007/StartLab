@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartLab Coaching Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            background: #f9f9f9;
+            color: #1d1d1f;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            margin: 0;
+        }
+        
+        .header {
+            background: #ffffff;
+            padding: 24px 32px 16px 32px;
+            border-bottom: 1px solid #e5e5e7;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 4px;
+            letter-spacing: -0.005em;
+        }
+        
+        .header .subtitle {
+            font-size: 15px;
+            color: #86868b;
+            font-weight: 400;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            background: #f9f9f9;
+            border-bottom: 1px solid #e5e5e7;
+            flex-shrink: 0;
+            padding: 0 16px;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 16px 12px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: #86868b;
+            transition: all 0.2s ease;
+            border-radius: 8px 8px 0 0;
+            margin: 0 2px;
+            position: relative;
+        }
+        
+        .tab:hover {
+            color: #1d1d1f;
+            background: rgba(0, 122, 255, 0.04);
+        }
+        
+        .tab.active {
+            background: #ffffff;
+            color: #1d1d1f;
+            border-bottom: 2px solid #007aff;
+        }
+        
+        .content-area {
+            flex: 1;
+            overflow: hidden;
+            background: #ffffff;
+        }
+        
+        .tab-content {
+            display: none;
+            height: 100%;
+            padding: 32px;
+            overflow-y: auto;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            height: 100%;
+        }
+        
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            height: 100%;
+        }
+        
+        .card {
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 24px;
+            height: fit-content;
+            border: 1px solid #e5e5e7;
+        }
+        
+        .card h3 {
+            color: #1d1d1f;
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.005em;
+        }
+        
+        .card h3 .emoji {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+        
+        .question-list {
+            list-style: none;
+        }
+        
+        .question-list li {
+            background: #ffffff;
+            margin: 8px 0;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid #e5e5e7;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #1d1d1f;
+        }
+        
+        .question-list li strong {
+            font-weight: 600;
+        }
+        
+        .attention-list {
+            list-style: none;
+        }
+        
+        .attention-list li {
+            padding: 6px 0;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #1d1d1f;
+        }
+        
+        .attention-list li strong {
+            font-weight: 600;
+        }
+        
+        .red-flag {
+            background: #fef7f7;
+            border-color: #ff3b30;
+        }
+        
+        .green-flag {
+            background: #f6fdf6;
+            border-color: #34c759;
+        }
+        
+        .tip-card {
+            background: #fff9e6;
+            border-color: #ff9500;
+        }
+        
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 32px;
+            height: 100%;
+        }
+        
+        .criteria-overview {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        
+        .criteria-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e5e5e7;
+        }
+        
+        .criteria-card h4 {
+            color: #1d1d1f;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: -0.005em;
+        }
+        
+        .criteria-card ul {
+            list-style: none;
+            font-size: 13px;
+        }
+        
+        .criteria-card li {
+            padding: 4px 0;
+            color: #86868b;
+            font-weight: 400;
+        }
+        
+        .criteria-card li::before {
+            content: "•";
+            color: #007aff;
+            margin-right: 8px;
+        }
+        
+        .format-info {
+            background: #f0f8ff;
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid #007aff;
+        }
+        
+        .format-info h4 {
+            color: #007aff;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .format-info ul {
+            list-style: none;
+        }
+        
+        .format-info li {
+            padding: 4px 0;
+            font-size: 13px;
+            color: #1d1d1f;
+        }
+        
+        .format-info li::before {
+            content: "•";
+            color: #007aff;
+            margin-right: 8px;
+        }
+        
+        .evaluation-template {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            height: 100%;
+        }
+        
+        .score-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e5e5e7;
+        }
+        
+        .score-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .score-item:last-child {
+            border-bottom: none;
+        }
+        
+        .score-item span {
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        
+        .score-item small {
+            color: #86868b;
+            font-size: 11px;
+        }
+        
+        .score-input {
+            width: 60px;
+            height: 32px;
+            padding: 0 12px;
+            text-align: center;
+            border: 1px solid #e5e5e7;
+            border-radius: 8px;
+            background: #ffffff;
+            font-size: 13px;
+            font-weight: 500;
+            color: #1d1d1f;
+        }
+        
+        .score-input:focus {
+            outline: none;
+            border-color: #007aff;
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+        }
+        
+        .notes-area {
+            width: 100%;
+            height: 64px;
+            padding: 12px;
+            border: 1px solid #e5e5e7;
+            border-radius: 8px;
+            resize: vertical;
+            font-family: inherit;
+            font-size: 13px;
+            background: #ffffff;
+            color: #1d1d1f;
+            line-height: 1.4;
+        }
+        
+        .notes-area:focus {
+            outline: none;
+            border-color: #007aff;
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+        }
+        
+        .notes-area::placeholder {
+            color: #86868b;
+        }
+        
+        .compact-section {
+            margin-bottom: 24px;
+        }
+        
+        .compact-section h4 {
+            color: #1d1d1f;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e5e5e7;
+        }
+        
+        .compact-list {
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        
+        .compact-list li {
+            margin: 8px 0;
+            padding-left: 12px;
+            position: relative;
+            color: #1d1d1f;
+        }
+        
+        .compact-list li::before {
+            content: "•";
+            color: #007aff;
+            position: absolute;
+            left: 0;
+        }
+        
+        .quick-questions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            font-size: 13px;
+        }
+        
+        .quick-questions .question {
+            background: #ffffff;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid #e5e5e7;
+            line-height: 1.5;
+        }
+        
+        .quick-questions .question strong {
+            color: #007aff;
+            font-weight: 600;
+        }
+        
+        .footer-info {
+            background: #f9f9f9;
+            color: #86868b;
+            padding: 12px 32px;
+            text-align: center;
+            font-size: 11px;
+            border-top: 1px solid #e5e5e7;
+            flex-shrink: 0;
+        }
+        
+        .checklist {
+            list-style: none;
+            font-size: 13px;
+        }
+        
+        .checklist li {
+            padding: 8px 0;
+            color: #1d1d1f;
+            position: relative;
+            padding-left: 24px;
+        }
+        
+        .checklist li::before {
+            content: "□";
+            position: absolute;
+            left: 0;
+            color: #007aff;
+            font-size: 14px;
+        }
+        
+        .section-header {
+            font-size: 13px;
+            font-weight: 600;
+            color: #86868b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #007aff;
+            color: #ffffff;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.2px;
+        }
+        
+        .badge.warning {
+            background: #ff3b30;
+        }
+        
+        .badge.success {
+            background: #34c759;
+        }
+        
+        .divider {
+            height: 1px;
+            background: #e5e5e7;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>StartLab Coaching Guide</h1>
+            <div class="subtitle">Final Pitch — Phase 2 — Jeudi 19 Juin 2025</div>
+        </div>
+        
+        <div class="nav-tabs">
+            <button class="tab active" onclick="showTab('overview')">Vue d'ensemble</button>
+            <button class="tab" onclick="showTab('prototype')">Prototype</button>
+            <button class="tab" onclick="showTab('business')">Business</button>
+            <button class="tab" onclick="showTab('odd')">Impact</button>
+            <button class="tab" onclick="showTab('presentation')">Présentation</button>
+            <button class="tab" onclick="showTab('power-questions')">Questions</button>
+            <button class="tab" onclick="showTab('flags')">Signaux</button>
+            <button class="tab" onclick="showTab('evaluation')">Évaluation</button>
+        </div>
+        
+        <div class="content-area">
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content active">
+                <div class="overview-grid">
+                    <div>
+                        <div class="section-header">Critères d'évaluation</div>
+                        <div class="criteria-overview">
+                            <div class="criteria-card">
+                                <h4>Prototype Testing</h4>
+                                <ul>
+                                    <li>Tests avec vrais utilisateurs</li>
+                                    <li>Insights actionnables</li>
+                                    <li>Itérations basées sur learnings</li>
+                                    <li>Données concrètes de validation</li>
+                                </ul>
+                            </div>
+                            <div class="criteria-card">
+                                <h4>Business Readiness</h4>
+                                <ul>
+                                    <li>Traction client tangible</li>
+                                    <li>Roadmap réaliste 12 mois</li>
+                                    <li>Go-to-market clair</li>
+                                    <li>Différenciation concurrentielle</li>
+                                </ul>
+                            </div>
+                            <div class="criteria-card">
+                                <h4>Alignement Impact</h4>
+                                <ul>
+                                    <li>3 KPIs mesurables définis</li>
+                                    <li>Impact quantifiable</li>
+                                    <li>Cohérence business/impact</li>
+                                    <li>Théorie du changement</li>
+                                </ul>
+                            </div>
+                            <div class="criteria-card">
+                                <h4>Qualité Présentation</h4>
+                                <ul>
+                                    <li>Clarté du message</li>
+                                    <li>Compréhensible premier audit</li>
+                                    <li>Passion & crédibilité équipe</li>
+                                    <li>Gestion questions difficiles</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="format-info">
+                            <h4>Format d'Évaluation</h4>
+                            <ul>
+                                <li><strong>5 minutes</strong> présentation (max 10 slides)</li>
+                                <li><strong>15 minutes</strong> Q&A avec panel</li>
+                                <li><strong>Grille</strong> d'évaluation structurée</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="card tip-card" style="margin-top: 24px;">
+                            <h3>Votre Mission</h3>
+                            <ul class="attention-list">
+                                <li><strong>Évaluer</strong> la qualité selon 4 critères</li>
+                                <li><strong>Challenger</strong> avec questions pertinentes</li>
+                                <li><strong>Donner feedback</strong> constructif</li>
+                                <li><strong>Contribuer</strong> sans pression de décision</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="card" style="margin-top: 16px;">
+                            <h3>Conseils Coach</h3>
+                            <ul class="attention-list" style="font-size: 12px;">
+                                <li>Posture "utilisateur naïf" très efficace</li>
+                                <li>2-3 questions par domaine suffisent</li>
+                                <li>Écoutez autant que vous questionnez</li>
+                                <li>"Je ne comprends pas" = test crucial</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Prototype Tab -->
+            <div id="prototype" class="tab-content">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Questions Clés</h3>
+                        <ul class="question-list">
+                            <li><strong>"Combien d'utilisateurs avez-vous testé et comment les avez-vous recrutés ?"</strong></li>
+                            <li><strong>"Quelle a été votre plus grande surprise lors des tests ?"</strong></li>
+                            <li><strong>"Qu'est-ce qui n'a PAS fonctionné et comment avez-vous réagi ?"</strong></li>
+                            <li><strong>"Comment validez-vous que votre solution résout vraiment le problème ?"</strong></li>
+                            <li><strong>"Pouvez-vous me montrer des données concrètes de ces tests ?"</strong></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Points d'Attention</h3>
+                        <ul class="attention-list">
+                            <li><strong>Vrais utilisateurs :</strong> Ont-ils testé avec de vraies personnes ou juste famille/amis ?</li>
+                            <li><strong>Insights actionnables :</strong> Les apprentissages sont-ils spécifiques et utilisables ?</li>
+                            <li><strong>Pivots basés learnings :</strong> Y a-t-il eu des changements suite aux tests ?</li>
+                            <li><strong>Données concrètes :</strong> Peuvent-ils montrer des métriques/feedback ?</li>
+                            <li><strong>Validation problème :</strong> Prouvent-ils que le problème existe vraiment ?</li>
+                            <li><strong>Processus itératif :</strong> Ont-ils un cycle test-learn-build ?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Business Tab -->
+            <div id="business" class="tab-content">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Questions Clés</h3>
+                        <ul class="question-list">
+                            <li><strong>"Parlez-moi de vos 3 premiers clients. Comment les avez-vous convaincus ?"</strong></li>
+                            <li><strong>"Quel est votre coût d'acquisition client actuel ?"</strong></li>
+                            <li><strong>"Si je vous donne 50k€ demain, sur quoi les dépensez-vous en priorité ?"</strong></li>
+                            <li><strong>"Comment comptez-vous passer de X à 10X utilisateurs/clients ?"</strong></li>
+                            <li><strong>"Qui sont vos concurrents directs et qu'est-ce qui vous différencie ?"</strong></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Points d'Attention</h3>
+                        <ul class="attention-list">
+                            <li><strong>Traction vérifiable :</strong> Chiffres réalistes et sourcés ?</li>
+                            <li><strong>Roadmap réaliste :</strong> Objectifs atteignables ou trop optimistes ?</li>
+                            <li><strong>Go-to-market clair :</strong> Stratégie précise pour acquérir clients ?</li>
+                            <li><strong>Différenciation :</strong> Avantage concurrentiel défendable ?</li>
+                            <li><strong>Unit economics :</strong> Modèle économique qui fonctionne ?</li>
+                            <li><strong>Scalabilité :</strong> Comment grandir sans casser le modèle ?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ODD Tab -->
+            <div id="odd" class="tab-content">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Questions Clés</h3>
+                        <ul class="question-list">
+                            <li><strong>"Comment mesurez-vous concrètement votre impact sur [ODD spécifique] ?"</strong></li>
+                            <li><strong>"Avez-vous des données baseline pour comparer vos résultats ?"</strong></li>
+                            <li><strong>"Votre impact grandit-il proportionnellement à votre business ?"</strong></li>
+                            <li><strong>"Comment évitez-vous les effets de bord négatifs ?"</strong></li>
+                            <li><strong>"Pouvez-vous quantifier votre impact d'ici 12 mois ?"</strong></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Points d'Attention</h3>
+                        <ul class="attention-list">
+                            <li><strong>KPIs mesurables :</strong> Pas du "greenwashing" mais des métriques précises</li>
+                            <li><strong>Impact au cœur :</strong> Intégré dans le business model, pas accessoire</li>
+                            <li><strong>Quantification :</strong> Peuvent-ils chiffrer leur impact actuel/futur ?</li>
+                            <li><strong>Théorie changement :</strong> Logique claire input → output → impact</li>
+                            <li><strong>Scalabilité impact :</strong> Plus de business = plus d'impact ?</li>
+                            <li><strong>Authenticité :</strong> Passion vraie pour la cause ?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Presentation Tab -->
+            <div id="presentation" class="tab-content">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Questions Clés</h3>
+                        <ul class="question-list">
+                            <li><strong>"Si vous deviez expliquer votre projet à votre grand-mère en 30 secondes ?"</strong></li>
+                            <li><strong>"Quel est le plus gros risque et comment l'adressez-vous ?"</strong></li>
+                            <li><strong>"Pourquoi VOUS êtes l'équipe qui va réussir ça ?"</strong></li>
+                            <li><strong>"Qu'est-ce qui vous empêche de dormir la nuit sur ce projet ?"</strong></li>
+                            <li><strong>"Comment savez-vous que vous résolvez un vrai problème ?"</strong></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Points d'Attention</h3>
+                        <ul class="attention-list">
+                            <li><strong>Clarté premier audit :</strong> Compréhensible sans expertise ?</li>
+                            <li><strong>Storytelling cohérent :</strong> Problème → Solution → Impact logique ?</li>
+                            <li><strong>Crédibilité équipe :</strong> Compétences + passion visible ?</li>
+                            <li><strong>Gestion stress :</strong> Réponses fluides sous pression ?</li>
+                            <li><strong>Authenticité :</strong> Passion vraie vs discours formaté ?</li>
+                            <li><strong>Vision claire :</strong> Savent où ils vont dans 3 ans ?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Power Questions Tab -->
+            <div id="power-questions" class="tab-content">
+                <div class="section-header">Questions transversales</div>
+                <div class="quick-questions">
+                    <div class="question"><strong>Réalisme :</strong> "Montrez-moi votre plus gros échec des 6 derniers mois"</div>
+                    <div class="question"><strong>Lucidité :</strong> "Si vous échouez, ce sera probablement pourquoi ?"</div>
+                    <div class="question"><strong>Focus :</strong> "3 choses que vous devez absolument réussir ces 6 prochois mois ?"</div>
+                    <div class="question"><strong>Vision :</strong> "Dans 3 ans, à quoi ressemble le succès pour vous ?"</div>
+                    <div class="question"><strong>Passion :</strong> "Qu'est-ce qui vous fait lever le matin pour ce projet ?"</div>
+                    <div class="question"><strong>Conviction :</strong> "Si vous ne pouviez plus être CEO, utiliseriez-vous votre produit ?"</div>
+                    <div class="question"><strong>Différenciation :</strong> "En quoi votre approche est-elle unique vs concurrents ?"</div>
+                    <div class="question"><strong>Apprentissage :</strong> "Qu'avez-vous appris qui vous a le plus surpris ?"</div>
+                    <div class="question"><strong>Resilience :</strong> "Comment gérez-vous les moments de doute ?"</div>
+                    <div class="question"><strong>Priorités :</strong> "Si vous n'aviez que 6 mois, que feriez-vous ?"</div>
+                    <div class="question"><strong>Validation :</strong> "Comment savez-vous que les clients veulent vraiment ça ?"</div>
+                    <div class="question"><strong>Risques :</strong> "Quel est votre plan B si ça ne marche pas ?"</div>
+                </div>
+            </div>
+            
+            <!-- Flags Tab -->
+            <div id="flags" class="tab-content">
+                <div class="grid-2">
+                    <div class="card red-flag">
+                        <h3><span class="badge warning">Attention</span> Red Flags</h3>
+                        <ul class="attention-list">
+                            <li>Réponses vagues aux questions chiffrées</li>
+                            <li>Pas de preuves concrètes de traction</li>
+                            <li>Roadmap irréaliste (trop rapide/ambitieuse)</li>
+                            <li>Équipe qui se contredit</li>
+                            <li>Impact social/environnemental flou</li>
+                            <li>Pas de passion authentique visible</li>
+                            <li>Métriques bidons ou non-trackées</li>
+                            <li>Discours commercial vs réalité</li>
+                            <li>Pas d'apprentissage des échecs</li>
+                            <li>Tout misé sur une seule hypothèse</li>
+                        </ul>
+                    </div>
+                    <div class="card green-flag">
+                        <h3><span class="badge success">Positif</span> Green Flags</h3>
+                        <ul class="attention-list">
+                            <li>Données concrètes et transparence</li>
+                            <li>Apprentissages clairs des échecs</li>
+                            <li>Équipe qui écoute et s'adapte</li>
+                            <li>Vision claire mais flexible</li>
+                            <li>Passion authentique pour le problème</li>
+                            <li>Obsession client/utilisateur</li>
+                            <li>Exécution rapide et itérative</li>
+                            <li>Curiosité et remise en question</li>
+                            <li>Humilité face aux challenges</li>
+                            <li>Métriques suivies régulièrement</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Evaluation Tab -->
+            <div id="evaluation" class="tab-content">
+                <div class="evaluation-template">
+                    <div>
+                        <div class="card">
+                            <h3>Grille de Notes</h3>
+                            <div class="score-card">
+                                <div class="score-item">
+                                    <span><strong>Prototype Testing</strong><br><small>Tests, insights, itérations</small></span>
+                                    <input type="number" class="score-input" placeholder="/10" min="0" max="10">
+                                </div>
+                                <div class="score-item">
+                                    <span><strong>Business Readiness</strong><br><small>Traction, roadmap, go-to-market</small></span>
+                                    <input type="number" class="score-input" placeholder="/10" min="0" max="10">
+                                </div>
+                                <div class="score-item">
+                                    <span><strong>Alignement Impact</strong><br><small>KPIs, impact, mesurabilité</small></span>
+                                    <input type="number" class="score-input" placeholder="/10" min="0" max="10">
+                                </div>
+                                <div class="score-item">
+                                    <span><strong>Présentation</strong><br><small>Clarté, passion, crédibilité</small></span>
+                                    <input type="number" class="score-input" placeholder="/10" min="0" max="10">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card" style="margin-top: 24px;">
+                            <h3>Check-list Session</h3>
+                            <ul class="checklist">
+                                <li>1 point fort majeur identifié</li>
+                                <li>1-2 axes d'amélioration suggérés</li>
+                                <li>Questions clés posées dans chaque domaine</li>
+                                <li>Feedback constructif donné</li>
+                                <li>Notes prises pour synthèse</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="card">
+                            <h3>Notes Qualitatives</h3>
+                            
+                            <div style="margin: 16px 0;">
+                                <div class="section-header">Points Forts</div>
+                                <textarea class="notes-area" placeholder="Ce qui fonctionne bien..."></textarea>
+                            </div>
+                            
+                            <div style="margin: 16px 0;">
+                                <div class="section-header">Points d'Amélioration</div>
+                                <textarea class="notes-area" placeholder="Ce qui peut être optimisé..."></textarea>
+                            </div>
+                            
+                            <div style="margin: 16px 0;">
+                                <div class="section-header">Recommandations</div>
+                                <textarea class="notes-area" placeholder="Conseils pour la suite..."></textarea>
+                            </div>
+                            
+                            <div style="margin: 16px 0;">
+                                <div class="section-header">Questions en Suspens</div>
+                                <textarea class="notes-area" placeholder="Points à creuser..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-info">
+            Posture : Bienveillant mais Challengeant — Votre regard "frais" = Atout majeur — StartLab Brussels
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            const tabs = ['overview', 'prototype', 'business', 'odd', 'presentation', 'power-questions', 'flags', 'evaluation'];
+            const currentTab = document.querySelector('.tab-content.active').id;
+            const currentIndex = tabs.indexOf(currentTab);
+            
+            if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                const targetTab = tabs[currentIndex - 1];
+                showTab(targetTab);
+                document.querySelector(`[onclick="showTab('${targetTab}')"]`).classList.add('active');
+            }
+            
+            if (e.key === 'ArrowRight' && currentIndex < tabs.length - 1) {
+                const targetTab = tabs[currentIndex + 1];
+                showTab(targetTab);
+                document.querySelector(`[onclick="showTab('${targetTab}')"]`).classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
